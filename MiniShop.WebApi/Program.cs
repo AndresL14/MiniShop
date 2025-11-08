@@ -1,25 +1,47 @@
+using Microsoft.EntityFrameworkCore;
+using MiniShop.Infrastructure.Persistence;
+using System;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// EF Core SQLite (DbContext en Infrastructure)
+builder.Services.AddDbContext<AppDbContext>(opt =>
+{
+    var cs = builder.Configuration.GetConnectionString("Default");
+    opt.UseSqlite(cs);
+});
 
+// Controllers + Swagger
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Servir archivos estáticos (wwwroot/images)
+builder.Services.AddDirectoryBrowser();
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Migrar/crear DB al iniciar (útil en pruebas locales)
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate();
+}
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// Habilitar static files para images
+app.UseStaticFiles();
 
-app.UseAuthorization();
+app.UseRouting();
 
 app.MapControllers();
+
+// Endpoint de salud mínimo
+app.MapGet("/health", () => Results.Ok(new { ok = true, utc = DateTime.UtcNow }));
 
 app.Run();
