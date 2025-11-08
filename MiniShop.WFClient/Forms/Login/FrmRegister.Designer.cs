@@ -77,11 +77,11 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 27.75F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
-            label1.Location = new Point(151, 25);
+            label1.Location = new Point(119, 26);
             label1.Name = "label1";
-            label1.Size = new Size(118, 50);
+            label1.Size = new Size(165, 50);
             label1.TabIndex = 4;
-            label1.Text = "Login";
+            label1.Text = "Registro";
             // 
             // button2
             // 
@@ -117,6 +117,7 @@
             Controls.Add(label1);
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
             Name = "FrmRegister";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Registro";
             ResumeLayout(false);
             PerformLayout();
