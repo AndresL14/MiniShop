@@ -52,5 +52,11 @@ namespace MiniShop.WFClient.Forms.Login
                 MessageBox.Show($"Error al conectar con la API:\n{ex.Message}", "MiniShop", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            var frm = new FrmRegister();
+            frm.ShowDialog();
+        }
     }
 }

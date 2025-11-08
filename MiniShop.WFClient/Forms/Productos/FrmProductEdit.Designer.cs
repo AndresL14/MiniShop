@@ -152,6 +152,7 @@
             Controls.Add(label1);
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
             Name = "FrmProductEdit";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Añadir producto";
             Load += FrmProductEdit_Load;
             ((System.ComponentModel.ISupportInitialize)numPrice).EndInit();
