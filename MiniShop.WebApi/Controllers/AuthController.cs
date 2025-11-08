@@ -45,7 +45,7 @@ namespace MiniShop.WebApi.Controllers
         {
             var user = _db.Users.SingleOrDefault(u => u.Username == request.Username);
             if (user == null || !VerifyPassword(request.Password, user.PasswordHash))
-                return Unauthorized("Usuario o contraseña incorrectos.");
+                return Unauthorized(new { message = "Usuario o contraseña incorrectos." });
 
             var token = _jwtService.GenerateToken(user.Id, user.Username, user.Role);
 
