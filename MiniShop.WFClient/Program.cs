@@ -1,17 +1,34 @@
-namespace MiniShop.WFClient
+using MiniShop.WFClient;
+using MiniShop.WFClient.Forms.Login;
+
+namespace MiniShop.WinFormsClient
 {
     internal static class Program
     {
         /// <summary>
-        ///  The main entry point for the application.
+        ///  Punto de entrada principal para la aplicación.
         /// </summary>
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new Form1());
+
+            // Mostrar login primero
+            using (var loginForm = new FrmLogin())
+            {
+                var result = loginForm.ShowDialog();
+
+                // Si el usuario se autentica correctamente, abre la app
+                if (result == DialogResult.OK && !string.IsNullOrEmpty(loginForm.Token))
+                {
+                    Application.Run(new FrmMain(loginForm.Token));
+                }
+                else
+                {
+                    // Si cancela o falla el login, se cierra
+                    Application.Exit();
+                }
+            }
         }
     }
 }
