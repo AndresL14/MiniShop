@@ -5,8 +5,6 @@ VisualStudioVersion = 17.14.36616.10 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniShop.Domain", "MiniShop.Domain\MiniShop.Domain.csproj", "{4381F5E6-942D-4DCC-8046-A23BEBD055FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniShop.Application", "MiniShop.Application\MiniShop.Application.csproj", "{B1641233-A203-4C6C-8151-8AD78D6DB872}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniShop.Infrastructure", "MiniShop.Infrastructure\MiniShop.Infrastructure.csproj", "{67F85FF6-AAB0-415B-9753-F385545E36F4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniShop.WebApi", "MiniShop.WebApi\MiniShop.WebApi.csproj", "{0E050AF3-C6F0-4E1D-8A62-ECBDA0025313}"
@@ -23,10 +21,6 @@ Global
 		{4381F5E6-942D-4DCC-8046-A23BEBD055FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4381F5E6-942D-4DCC-8046-A23BEBD055FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4381F5E6-942D-4DCC-8046-A23BEBD055FB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B1641233-A203-4C6C-8151-8AD78D6DB872}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B1641233-A203-4C6C-8151-8AD78D6DB872}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B1641233-A203-4C6C-8151-8AD78D6DB872}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B1641233-A203-4C6C-8151-8AD78D6DB872}.Release|Any CPU.Build.0 = Release|Any CPU
 		{67F85FF6-AAB0-415B-9753-F385545E36F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{67F85FF6-AAB0-415B-9753-F385545E36F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{67F85FF6-AAB0-415B-9753-F385545E36F4}.Release|Any CPU.ActiveCfg = Release|Any CPU

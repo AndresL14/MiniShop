@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MiniShop.Application\MiniShop.Application.csproj" />
     <ProjectReference Include="..\MiniShop.Domain\MiniShop.Domain.csproj" />
   </ItemGroup>
 

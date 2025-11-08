@@ -72,7 +72,7 @@
             txtUsername.Location = new Point(188, 130);
             txtUsername.Name = "txtUsername";
             txtUsername.Size = new Size(197, 23);
-            txtUsername.TabIndex = 3;
+            txtUsername.TabIndex = 1;
             // 
             // txtPassword
             // 
@@ -80,7 +80,7 @@
             txtPassword.Name = "txtPassword";
             txtPassword.PasswordChar = '*';
             txtPassword.Size = new Size(197, 23);
-            txtPassword.TabIndex = 3;
+            txtPassword.TabIndex = 2;
             txtPassword.UseSystemPasswordChar = true;
             // 
             // btnLogin
@@ -88,7 +88,7 @@
             btnLogin.Location = new Point(88, 256);
             btnLogin.Name = "btnLogin";
             btnLogin.Size = new Size(98, 23);
-            btnLogin.TabIndex = 4;
+            btnLogin.TabIndex = 3;
             btnLogin.Text = "Iniciar sesión";
             btnLogin.UseVisualStyleBackColor = true;
             btnLogin.Click += btnLogin_Click_1;
@@ -101,6 +101,7 @@
             button2.TabIndex = 4;
             button2.Text = "Registro";
             button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
             // 
             // FrmLogin
             // 

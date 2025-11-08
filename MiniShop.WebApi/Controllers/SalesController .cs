@@ -45,11 +45,16 @@ namespace MiniShop.WebApi.Controllers
             {
                 var product = _db.Products.FirstOrDefault(p => p.Id == item.ProductId);
                 if (product == null)
-                    return BadRequest($"Producto ID {item.ProductId} no existe.");
+                    return BadRequest($"El producto con ID {item.ProductId} no existe.");
+
+                if (item.Quantity <= 0)
+                    return BadRequest($"La cantidad para el producto {product.Name} debe ser mayor que cero.");
 
                 if (product.Stock < item.Quantity)
-                    return BadRequest($"Stock insuficiente para el producto {product.Name}.");
+                    return BadRequest($"Stock insuficiente para el producto '{product.Name}'. " +
+                                      $"Disponible: {product.Stock}, solicitado: {item.Quantity}.");
 
+                // Crear el ítem de venta
                 var saleItem = new SaleItem
                 {
                     ProductId = item.ProductId,
