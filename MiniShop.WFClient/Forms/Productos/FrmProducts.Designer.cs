@@ -31,7 +31,6 @@
             dgvProducts = new DataGridView();
             label1 = new Label();
             btnAdd = new Button();
-            btnLoad = new Button();
             panel1 = new Panel();
             btnEliminar = new Button();
             btnEditar = new Button();
@@ -74,22 +73,11 @@
             btnAdd.UseVisualStyleBackColor = true;
             btnAdd.Click += btnAdd_Click;
             // 
-            // btnLoad
-            // 
-            btnLoad.Location = new Point(387, 72);
-            btnLoad.Name = "btnLoad";
-            btnLoad.Size = new Size(143, 23);
-            btnLoad.TabIndex = 2;
-            btnLoad.Text = "Cargar";
-            btnLoad.UseVisualStyleBackColor = true;
-            btnLoad.Click += btnLoad_Click_1;
-            // 
             // panel1
             // 
             panel1.Controls.Add(label1);
             panel1.Controls.Add(btnEliminar);
             panel1.Controls.Add(btnAdd);
-            panel1.Controls.Add(btnLoad);
             panel1.Controls.Add(btnEditar);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
@@ -130,6 +118,7 @@
             Name = "FrmProducts";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "FrmProducts";
+            Load += FrmProducts_Load;
             ((System.ComponentModel.ISupportInitialize)dgvProducts).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
@@ -141,7 +130,6 @@
         private DataGridView dgvProducts;
         private Label label1;
         private Button btnAdd;
-        private Button btnLoad;
         private Panel panel1;
         private Button btnEliminar;
         private Button btnEditar;

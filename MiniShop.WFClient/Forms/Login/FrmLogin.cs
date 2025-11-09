@@ -26,6 +26,11 @@ namespace MiniShop.WFClient.Forms.Login
 
         private async void btnLogin_Click_1(object sender, EventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(txtUsername.Text) || string.IsNullOrWhiteSpace(txtPassword.Text))
+            {
+                MessageBox.Show("Por favor, complete todos los campos.", "MiniShop", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             var loginData = new
             {
                 username = txtUsername.Text.Trim(),

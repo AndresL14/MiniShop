@@ -1,14 +1,6 @@
 ﻿using MiniShop.WFClient.Services;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace MiniShop.WFClient.Forms.Sales
 {
@@ -26,27 +18,13 @@ namespace MiniShop.WFClient.Forms.Sales
 
         private async void FrmSales_Load(object sender, EventArgs e)
         {
-            var result = await _api.GetAsync<JsonElement>("api/products?page=1&pageSize=100");
-            if (result.TryGetProperty("items", out var items))
-            {
-                var products = items.EnumerateArray()
-                    .Select(p => new
-                    {
-                        Id = p.GetProperty("id").GetInt32(),
-                        Name = p.GetProperty("name").GetString(),
-                        Price = p.GetProperty("price").GetDecimal()
-                    })
-                    .ToList();
-
-                cmbProducts.DataSource = products;
-                cmbProducts.DisplayMember = "Name";
-                cmbProducts.ValueMember = "Id";
-            }
+            await CargarDatos();
         }
 
         private void btnAddItem_Click(object sender, EventArgs e)
         {
-            if (cmbProducts.SelectedItem == null) return;
+            if (cmbProducts.SelectedItem == null)
+                return;
 
             var selected = (dynamic)cmbProducts.SelectedItem;
             int id = selected.Id;
@@ -54,9 +32,42 @@ namespace MiniShop.WFClient.Forms.Sales
             decimal price = selected.Price;
             int qty = (int)numQty.Value;
 
-            if (qty <= 0) return;
+            if (qty <= 0)
+            {
+                MessageBox.Show("Debe ingresar una cantidad válida.", "MiniShop", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
-            _items.Add((id, name, price, qty));
+            var existing = _items.FirstOrDefault(i => i.productId == id);
+
+            if (existing.productId != 0)
+            {
+                int nuevaCantidad = existing.qty + qty;
+
+                int stockDisponible = selected.Stock ?? 0;
+
+                if (stockDisponible > 0 && nuevaCantidad > stockDisponible)
+                {
+                    MessageBox.Show($"Stock insuficiente. Solo hay {stockDisponible} unidades disponibles.", "MiniShop", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                _items.Remove(existing);
+                _items.Add((id, name, price, nuevaCantidad));
+            }
+            else
+            {
+                int stockDisponible = selected.Stock ?? 0;
+
+                if (stockDisponible > 0 && qty > stockDisponible)
+                {
+                    MessageBox.Show($"Stock insuficiente. Solo hay {stockDisponible} unidades disponibles.", "MiniShop", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                _items.Add((id, name, price, qty));
+            }
+
             dgvItems.DataSource = null;
             dgvItems.DataSource = _items.Select(i => new
             {
@@ -88,6 +99,8 @@ namespace MiniShop.WFClient.Forms.Sales
             _items.Clear();
             dgvItems.DataSource = null;
             lblTotal.Text = "Total: $0";
+
+            await CargarDatos();
         }
 
         private async void cmbProducts_SelectedIndexChanged(object sender, EventArgs e)
@@ -103,7 +116,65 @@ namespace MiniShop.WFClient.Forms.Sales
                     int stock = product.GetProperty("stock").GetInt32();
                     numQty.Maximum = stock;
                 }
+                numQty.Value = 0;
             }
+        }
+
+        private async Task CargarDatos()
+        {
+
+            var result = await _api.GetAsync<JsonElement>("api/products?page=1&pageSize=100");
+            if (result.TryGetProperty("items", out var items))
+            {
+                var products = items.EnumerateArray()
+                    .Select(p => new
+                    {
+                        Id = p.GetProperty("id").GetInt32(),
+                        Name = p.GetProperty("name").GetString(),
+                        Price = p.GetProperty("price").GetDecimal(),
+                        Stock = p.GetProperty("stock").GetInt32()
+                    })
+                    .ToList();
+
+                cmbProducts.DataSource = products;
+                cmbProducts.DisplayMember = "Name";
+                cmbProducts.ValueMember = "Id";
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (dgvItems.CurrentRow == null)
+            {
+                MessageBox.Show("Seleccione un producto para eliminar.", "MiniShop", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Obtener el nombre del producto seleccionado
+            string productName = dgvItems.CurrentRow.Cells["Producto"].Value.ToString() ?? "";
+
+            // Confirmar eliminación
+            if (MessageBox.Show($"¿Desea eliminar '{productName}' del carrito?", "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                return;
+
+            // Obtener el ID del producto
+            var selectedProduct = _items.FirstOrDefault(i => i.name == productName);
+
+            if (selectedProduct.productId != 0)
+                _items.Remove(selectedProduct);
+
+            // Refrescar la grid
+            dgvItems.DataSource = null;
+            dgvItems.DataSource = _items.Select(i => new
+            {
+                Producto = i.name,
+                Cantidad = i.qty,
+                Precio = i.price,
+                Subtotal = i.price * i.qty
+            }).ToList();
+
+            // Recalcular total
+            lblTotal.Text = $"Total: {_items.Sum(i => i.price * i.qty):C}";
         }
     }
 }
