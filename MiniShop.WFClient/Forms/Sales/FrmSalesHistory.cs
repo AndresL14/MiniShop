@@ -18,8 +18,8 @@ namespace MiniShop.WFClient.Forms.Sales
         private async void btnLoad_Click(object sender, EventArgs e)
         {
 
-            string from = dtFrom.Value.ToString("yyyy-MM-dd");
-            string to = dtTo.Value.ToString("yyyy-MM-dd");
+            string from = dtFrom.Value.ToString("MM/dd/yyy");
+            string to = dtTo.Value.ToString("MM/dd/yyy");
 
             try
             {
