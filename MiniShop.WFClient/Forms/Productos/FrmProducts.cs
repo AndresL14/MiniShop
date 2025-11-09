@@ -23,7 +23,7 @@ namespace MiniShop.WFClient.Forms.Productos
             _api.SetToken(token);
         }
 
-        private async void btnLoad_Click_1(object sender, EventArgs e)
+        private async void FrmProducts_Load(object sender, EventArgs e)
         {
             await LoadProducts();
         }

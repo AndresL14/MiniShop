@@ -23,7 +23,7 @@ namespace MiniShop.WebApi.Controllers
             var sales = _db.Sales
                 .Include(s => s.Items)
                 .Include(s => s.User)
-                .Where(s => s.Date >= from && s.Date <= to)
+                .Where(s => s.Date.Date >= from.Date && s.Date.Date <= to.Date)
                 .Select(s => new
                 {
                     s.Id,

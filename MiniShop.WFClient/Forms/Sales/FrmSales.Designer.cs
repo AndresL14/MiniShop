@@ -40,6 +40,7 @@
             btnSaveSale = new Button();
             lblTotal = new Label();
             dgvItems = new DataGridView();
+            btnRemove = new Button();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numQty).BeginInit();
@@ -86,6 +87,7 @@
             // 
             // panel2
             // 
+            panel2.Controls.Add(btnRemove);
             panel2.Controls.Add(btnAddItem);
             panel2.Controls.Add(label3);
             panel2.Controls.Add(numQty);
@@ -162,8 +164,19 @@
             dgvItems.Name = "dgvItems";
             dgvItems.ReadOnly = true;
             dgvItems.RowHeadersVisible = false;
+            dgvItems.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvItems.Size = new Size(912, 303);
             dgvItems.TabIndex = 5;
+            // 
+            // btnRemove
+            // 
+            btnRemove.Location = new Point(574, 15);
+            btnRemove.Name = "btnRemove";
+            btnRemove.Size = new Size(75, 23);
+            btnRemove.TabIndex = 5;
+            btnRemove.Text = "Eliminar";
+            btnRemove.UseVisualStyleBackColor = true;
+            btnRemove.Click += button1_Click;
             // 
             // FrmSales
             // 
@@ -203,5 +216,6 @@
         private Label lblTotal;
         private DataGridView dgvItems;
         private Button btnSaveSale;
+        private Button btnRemove;
     }
 }
